@@ -186,3 +186,4 @@ columns_for_model = [
     'education_level_encoded',
 ]
 
+
