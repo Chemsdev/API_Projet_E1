@@ -23,7 +23,7 @@ COPY preprocessing.py  .
 COPY insert_data_db.py .
 
 # Copie du modèle pickle.
-# COPY logistic_regression.pickle .
+COPY logistic_regression.pickle .
 
 # On spécifie le port.
 EXPOSE 8501
