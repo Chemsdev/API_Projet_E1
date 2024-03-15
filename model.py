@@ -1,7 +1,7 @@
 import pickle
 
 # Ouverture du modèle en pickle
-with open("logistic_regression_model.pickle", 'rb') as file:
+with open("logistic_regression.pickle", 'rb') as file:
     loaded_model = pickle.load(file)
 
 # Fonction permettent d'éxécuter le modèle
