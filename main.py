@@ -14,7 +14,7 @@ from tools          import *
 from database_init   import *
 from preprocessing   import *
 from insert_data_db  import *
-
+from model           import *
 
 # Authentification API.
 def Authentification(api_key:str):
@@ -83,13 +83,12 @@ async def preprocess(api_key:str, data:dict):
 @app.post("/modeling")
 async def modeling(api_key:str, data_preprocess:dict):
     
-    prediction = "yes"
     
     # Authentification API.
     if not Authentification(api_key=api_key):
         raise HTTPException(status_code=401, detail="Unauthorized")    
     
-    
+    prediction = model(X_new=pd.DataFrame(data_preprocess), model_pickle=loaded_model)
     return prediction
 
 

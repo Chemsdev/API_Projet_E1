@@ -21,6 +21,7 @@ COPY options.py   .
 COPY database_init.py  .
 COPY preprocessing.py  .
 COPY insert_data_db.py .
+COPY model.py .
 
 # Copie du modèle pickle.
 COPY logistic_regression.pickle .
