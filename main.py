@@ -1,20 +1,21 @@
 # FastAPI
 from   fastapi import FastAPI, HTTPException
 from   fastapi import FastAPI
-from   dotenv  import load_dotenv
-import os
-
 
 # Others
+from dotenv         import load_dotenv
 from features       import *
 from tools          import *
-
+import os
+import pickle
 
 # CODE END-POINTS
 from database_init   import *
 from preprocessing   import *
 from insert_data_db  import *
-from model           import *
+
+
+# ==================================================>
 
 # Authentification API.
 def Authentification(api_key:str):
@@ -23,6 +24,17 @@ def Authentification(api_key:str):
     if api_key == password_api:
         return True
     return False
+
+# ==================================================>
+
+# Ouverture du modèle en pickle
+with open("logistic_regression.pickle", 'rb') as file:
+    model_pickle = pickle.load(file)
+
+# ==================================================>
+
+
+
 
 
 app = FastAPI()
@@ -79,7 +91,6 @@ async def preprocess(api_key:str, data:dict):
 
 # =========================================================================================>
 
-
 @app.post("/modeling")
 async def modeling(api_key:str, data_preprocess:dict):
     
@@ -88,9 +99,10 @@ async def modeling(api_key:str, data_preprocess:dict):
     if not Authentification(api_key=api_key):
         raise HTTPException(status_code=401, detail="Unauthorized")    
     
-    prediction = model(X_new=pd.DataFrame(data_preprocess))
+    prediction = model_pickle.predict(data_preprocess)
     return prediction
 
+# =========================================================================================>
 
 
 
