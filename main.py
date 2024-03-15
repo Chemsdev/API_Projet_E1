@@ -113,6 +113,7 @@ async def modeling(api_key:str, data_preprocess:dict):
 
 
 
+
     
     # # simulation d'entrer utilisateur.
     # data = [
