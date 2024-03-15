@@ -95,11 +95,11 @@ async def modeling(api_key:str, data_preprocess:dict):
     
     # Authentification API.
     if not Authentification(api_key=api_key):
-        raise HTTPException(status_code=401, detail="Unauthorized")    
+        raise HTTPException(status_code=401, detail="Unauthorized")   
     
-    X_new = pd.DataFrame([data_preprocess])
-    prediction = model_pickle.predict(X_new)
-    
+    X = {new_key: data_preprocess[old_key] for old_key, new_key in zip(data_preprocess.keys(), columns_for_model)}
+    X_new = pd.DataFrame([X])
+    prediction = model_pickle.predict(X_new) 
     return prediction
 
 # =========================================================================================>
