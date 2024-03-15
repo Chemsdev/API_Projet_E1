@@ -54,7 +54,6 @@ async def init(api_key:str):
         # Insertion des données raw.
         insert_raw_data()
     
-
     return "Initialisation succès !"
 
 # =========================================================================================>
@@ -94,13 +93,13 @@ async def preprocess(api_key:str, data:dict):
 @app.post("/modeling")
 async def modeling(api_key:str, data_preprocess:dict):
     
-    
     # Authentification API.
     if not Authentification(api_key=api_key):
         raise HTTPException(status_code=401, detail="Unauthorized")    
     
     X_new = pd.DataFrame([data_preprocess])
     prediction = model_pickle.predict(X_new)
+    
     return prediction
 
 # =========================================================================================>
