@@ -15,7 +15,6 @@ COPY tools.py     .
 COPY data.csv     .
 COPY features.py  .
 COPY options.py   .
-COPY .env         .
 
 
 # Les fichiers pythons pour les end-points.
