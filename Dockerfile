@@ -30,3 +30,4 @@ EXPOSE 8501
 
 # On spécifie la commande à saisir pour exécuter l'app.
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+
