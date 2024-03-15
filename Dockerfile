@@ -15,7 +15,7 @@ COPY tools.py     .
 COPY data.csv     .
 COPY features.py  .
 COPY options.py   .
-
+COPY model.py     .
 
 # Les fichiers pythons pour les end-points.
 COPY database_init.py  .
@@ -24,6 +24,8 @@ COPY insert_data_db.py .
 
 # Copie du modèle pickle.
 COPY logistic_regression.pickle .
+
+# COPY .env .
 
 # On spécifie le port.
 EXPOSE 8501

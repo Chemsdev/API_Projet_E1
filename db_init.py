@@ -5,7 +5,7 @@ from tools import *
 
 # ===================================================================================================>
 
-# Création de la table raw_data
+# Création de la table raw_data.
 def create_table_raw_data():
     config = set_confg(liste_connexion=AZURE_INCLUSION)
     engine_azure = connect_mysql(config=config)
@@ -33,6 +33,7 @@ def create_table_raw_data():
     
 # ===================================================================================================>
 
+# Création de la table new_data.
 def create_table_new_data():
     config = set_confg(liste_connexion=AZURE_INCLUSION)
     engine_azure = connect_mysql(config=config)
