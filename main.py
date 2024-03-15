@@ -27,9 +27,9 @@ def Authentification(api_key:str):
 
 # ==================================================>
 
-# Ouverture du modèle en pickle
-with open("logistic_regression.pickle", 'rb') as file:
-    model_pickle = pickle.load(file)
+# # Ouverture du modèle en pickle
+# with open("logistic_regression.pickle", 'rb') as file:
+#     model_pickle = pickle.load(file)
 
 # ==================================================>
 
@@ -91,16 +91,16 @@ async def preprocess(api_key:str, data:dict):
 
 # =========================================================================================>
 
-@app.post("/modeling")
-async def modeling(api_key:str, data_preprocess:dict):
+# @app.post("/modeling")
+# async def modeling(api_key:str, data_preprocess:dict):
     
     
-    # Authentification API.
-    if not Authentification(api_key=api_key):
-        raise HTTPException(status_code=401, detail="Unauthorized")    
+#     # Authentification API.
+#     if not Authentification(api_key=api_key):
+#         raise HTTPException(status_code=401, detail="Unauthorized")    
     
-    prediction = model_pickle.predict(data_preprocess)
-    return prediction
+#     prediction = model_pickle.predict(data_preprocess)
+#     return prediction
 
 # =========================================================================================>
 
