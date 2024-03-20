@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - webappfinancialinclusionchems
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://containerfinancialinclusionchems.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_2bca9517c61343c7bb5bb4d4d2298c8f }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_7c3a262ccddb41108ab7b3b093da2327 }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: containerfinancialinclusionchems.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2bca9517c61343c7bb5bb4d4d2298c8f }}/containerfinancialinclusionchems/containerfinancialinclusionchems/financial_inclusion_api:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'webappfinancialinclusionchems'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_7c9d47de5f46490d8214b46934d59efa }}
+        images: 'containerfinancialinclusionchems.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2bca9517c61343c7bb5bb4d4d2298c8f }}/containerfinancialinclusionchems/containerfinancialinclusionchems/financial_inclusion_api:${{ github.sha }}'
