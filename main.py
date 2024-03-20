@@ -10,10 +10,11 @@ import os
 import pickle
 
 # CODE END-POINTS
-from database_init   import *
+from db_init         import *
 from preprocessing   import *
 from insert_data_db  import *
 from model           import *
+from get_data_db     import *
 
 
 # ==================================================>
@@ -82,6 +83,7 @@ async def preprocess(api_key:str, data:dict):
     if not Authentification(api_key=api_key):
         raise HTTPException(status_code=401, detail="Unauthorized")    
     
+    # Preprocessing des données.
     data = [i for i in data.values()]
     data_preprocess=preprocessing(data)
     
@@ -96,19 +98,23 @@ async def modeling(api_key:str, data_preprocess:dict):
     if not Authentification(api_key=api_key):
         raise HTTPException(status_code=401, detail="Unauthorized")   
     
-    
-    
+    # Réalisation des prédictions.
     prediction = execute_model(data_preprocess, model_pickle=model_pickle)
-    
-    
     return {"prediction": prediction.tolist()}
 
 # =========================================================================================>
 
-
-
-
-
+@app.get("/get_data")
+async def get_data(api_key:str):
+    
+    # Authentification API.
+    if not Authentification(api_key=api_key):
+        raise HTTPException(status_code=401, detail="Unauthorized") 
+    
+    # Récupération des données.
+    raw_data = get_data_db()
+    raw_data = raw_data.to_dict()
+    return raw_data 
 
 
 
