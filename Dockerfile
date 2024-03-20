@@ -25,7 +25,7 @@ COPY get_data_db.py    .
 # Copie du modèle pickle.
 COPY logistic_regression.pickle .
 
-COPY .env .
+# COPY .env .
 
 # On spécifie le port.
 EXPOSE 8501
