@@ -46,6 +46,7 @@ def one_hot_encoding_other_features(value:str, columns_table, inputs):
     index = inputs.index(value)
 
     # Insertion de 1 au bon champs
+    columns_table = columns_table.copy()
     columns_table[list(columns_table.keys())[index]] = 1.0
     return columns_table
 
@@ -105,7 +106,6 @@ def preprocessing(features:list):
         encode_access_loc, 
         encode_pays, 
         encode_group_age, 
-        encode_group_age, 
         encode_etat_civil, 
         encode_type_job, 
         encode_relation_famille, 
@@ -114,7 +114,19 @@ def preprocessing(features:list):
         age,
         niveau_education_encode
     ]
+    
+    
+    # for i in list_encodings:
+    #     print(i)
+        
+        
     data_preprocess = prepare_data_preprocess(list_encodings=list_encodings)
+    
+    
+    print("here:")
+    for key, value in data_preprocess.items():
+        print(f"Clé : {key}, Valeur : {value}")
+
     return data_preprocess
 # ============================================================================================================================================>
 
