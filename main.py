@@ -134,6 +134,7 @@ async def get_data(api_key:str):
 
 
 
+
     
     # # simulation d'entrer utilisateur.
     # data = [
