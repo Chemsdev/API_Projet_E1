@@ -58,7 +58,7 @@ performance = """
         recall FLOAT,
         f1score FLOAT,
         support FLOAT,
-        LOG
+        LOG VARCHAR(50)
     )
 """
 
@@ -145,7 +145,7 @@ def insert_performance():
         "support": [1543, 204]
     }
     scoring_2016_2017 = {
-        "model" : "2016-2017",
+        "model" : "2017",
         "classe": [0.0, 1.0],
         "precision": [0.96, 0.27],
         "recall": [0.76, 0.75],
@@ -153,7 +153,7 @@ def insert_performance():
         "support": [2743, 328]
     }
     scoring_2016_2017_2018 = {
-        "model" : "2016-2017-2018",
+        "model" : "2018",
         "classe": [0.0, 1.0],
         "precision": [0.94, 0.38],
         "recall": [0.79, 0.73],
@@ -181,3 +181,6 @@ def insert_performance():
     scoring_data.to_sql("performance", index=False, con=engine_azure, if_exists="append")
     engine_azure.close()
 
+
+create_table(performance)
+insert_performance()
