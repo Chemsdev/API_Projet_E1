@@ -57,7 +57,8 @@ performance = """
         `precision` FLOAT,
         recall FLOAT,
         f1score FLOAT,
-        support FLOAT
+        support FLOAT,
+        LOG
     )
 """
 
@@ -159,10 +160,24 @@ def insert_performance():
         "f1score": [0.86, 0.50],
         "support": [4005, 700]
     }
+
+    scoring = [
+        scoring_2016,
+        scoring_2016_2017,
+        scoring_2016_2017_2018
+    ]
+
+    for i in scoring: 
+        if i["recall"][1] <= 0.50:
+            i["LOG"] = "Attention, la performance du modèle diminue fortement"
+        else:
+            i["LOG"] = "R.A.S"
+            
     # Conversion les dictionnaires en DataFrames
     df_2016           = pd.DataFrame(scoring_2016)
     df_2016_2017      = pd.DataFrame(scoring_2016_2017)
     df_2016_2017_2018 = pd.DataFrame(scoring_2016_2017_2018)
+
     # Concaténation des DataFrames
     scoring_data = pd.concat([df_2016, df_2016_2017, df_2016_2017_2018], ignore_index=True)
     scoring_data.to_sql("performance", index=False, con=engine_azure, if_exists="append")
