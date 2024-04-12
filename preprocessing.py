@@ -114,14 +114,8 @@ def preprocessing(features:list):
         age,
         niveau_education_encode
     ]
-    
-    
-    # for i in list_encodings:
-    #     print(i)
-        
-        
+              
     data_preprocess = prepare_data_preprocess(list_encodings=list_encodings)
-    
     
     print("here:")
     for key, value in data_preprocess.items():

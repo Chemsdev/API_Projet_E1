@@ -160,13 +160,11 @@ def insert_performance():
         "f1score": [0.86, 0.50],
         "support": [4005, 700]
     }
-
     scoring = [
         scoring_2016,
         scoring_2016_2017,
         scoring_2016_2017_2018
     ]
-
     for i in scoring: 
         if i["recall"][1] <= 0.50:
             i["LOG"] = "Attention, la performance du modèle diminue fortement"
