@@ -36,7 +36,6 @@ with open("logistic_regression.pickle", 'rb') as file:
 # ==================================================>
 
 
-
 app = FastAPI()
 
 # =========================================================================================>
@@ -47,12 +46,21 @@ async def init(api_key:str):
     # Authentification API.
     if not Authentification(api_key=api_key):
         raise HTTPException(status_code=401, detail="Unauthorized")    
-    
-    # Création des tables si elles n'existent pas.
+
+    # Création de la base de données.
+    create_database_init()
+        
+    # Vérification si la table raw_data est vide.
     if check_if_tables_is_empty(table="raw_data"):
         
-        # Insertion des données raw.
+        # Insertion des données initiales (raw).
         insert_raw_data()
+    
+    # Vérification si la table performance est vide.
+    if check_if_tables_is_empty(table="performance"):
+        
+        # Insertion des performances.
+        insert_performance()
     
     return "Initialisation succès !"
 
@@ -112,12 +120,25 @@ async def get_data(api_key:str):
         raise HTTPException(status_code=401, detail="Unauthorized") 
     
     # Récupération des données.
-    raw_data = get_data_db()
+    raw_data = get_data_db(table="raw_data")
     raw_data = raw_data.to_dict()
     return raw_data 
 
+# =========================================================================================>
 
+@app.get("/get_performance")
+async def get_performance(api_key:str):
+    
+    # Authentification API.
+    if not Authentification(api_key=api_key):
+        raise HTTPException(status_code=401, detail="Unauthorized") 
+    
+    # Récupération des données.
+    performance = get_data_db(table="performance")
+    performance = performance.to_dict()
+    return performance 
 
+# =========================================================================================>
 
 
 
